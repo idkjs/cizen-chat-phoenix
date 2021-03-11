@@ -1,4 +1,4 @@
-open Message;
+
 [@react.component]
 let make = (~messages) => {
   <div className="c-messages">

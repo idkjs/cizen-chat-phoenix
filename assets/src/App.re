@@ -1,5 +1,4 @@
 open Phx;
-open !MessageMap;
 
 let subtract = (a1, a2) => {
   let l2 = Array.to_list(a2);
@@ -33,13 +32,7 @@ type action =
   | ReceiveAvatarProfile(string, string)
   | Receive(string, string, string)
   | UpdateText(string);
-// let (state, dispatch) = React.useReducer(
-//   (state, action) =>
-//     switch (action) {
-//     | Tick => {count: state.count + 1}
-//     },
-//   {count: 0}
-// );
+
 let reducer = (state, action) =>
   switch (action) {
   | Connected(id, name, socket, channel) =>
@@ -52,7 +45,7 @@ let reducer = (state, action) =>
         rooms: Room.RoomMap.empty,
         available: [||],
         entered: [||],
-        messages: MessageMap.empty,
+        messages: MessageMap.MessageMap.empty,
         text: "",
         selected: None,
       });
@@ -148,13 +141,6 @@ let reducer = (state, action) =>
 
 [@react.component]
 let make = () => {
-  //   let (state, dispatch) = React.useReducer(
-  //   (state, action) =>
-  //     switch (action) {
-  //     | Tick => {count: state.count + 1}
-  //     },
-  //   {count: 0}
-  // );
   let (state, dispatch) = React.useReducer(reducer, Connecting);
 
   let sendAvatarProfile = name => {
@@ -195,7 +181,6 @@ let make = () => {
     };
   };
   let connect = () => {
-    Js.log("CONNECTING");
     let socket = initSocket("/socket") |> connectSocket(_);
     let channel = socket |> initChannel("lounge:hello", _);
     let _ =
@@ -217,7 +202,6 @@ let make = () => {
            let welcome: Decode.welcome = Decode.welcome(res);
            dispatch(Connected(welcome.id, welcome.name, socket, channel));
          });
-    ();
   };
 
   React.useEffect0(() => {

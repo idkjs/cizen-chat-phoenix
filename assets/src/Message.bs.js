@@ -37,6 +37,9 @@ function getMsg(room, map) {
   }
 }
 
+var MessageMap = MessageMap$CizenChat.MessageMap;
+
+exports.MessageMap = MessageMap;
 exports.addMsg = addMsg;
 exports.getMsg = getMsg;
 /* MessageMap-CizenChat Not a pure module */
