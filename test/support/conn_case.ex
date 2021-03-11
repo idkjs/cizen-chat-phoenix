@@ -12,7 +12,8 @@ defmodule CizenChatWeb.ConnCase do
   inside a transaction which is reset at the beginning
   of the test unless the test case is marked as async.
   """
-
+import Plug.Conn
+    import Phoenix.ConnTest
   use ExUnit.CaseTemplate
 
   using do

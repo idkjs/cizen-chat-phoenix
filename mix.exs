@@ -32,13 +32,14 @@ defmodule CizenChat.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:cizen, "~> 0.12.5"},
-      {:phoenix, "~> 1.3.4"},
-      {:phoenix_pubsub, "~> 1.0"},
-      {:phoenix_html, "~> 2.10"},
-      {:phoenix_live_reload, "~> 1.0", only: :dev},
-      {:gettext, "~> 0.11"},
-      {:cowboy, "~> 1.0"}
+      {:cizen, "~> 0.17.0"},
+      {:phoenix, "~> 1.5.8"},
+      {:phoenix_pubsub, "~> 2.0"},
+      {:phoenix_html, "~> 2.14"},
+      {:phoenix_live_reload, "~> 1.3", only: :dev},
+      {:gettext, "~> 0.18"},
+      {:cowboy, "~> 2.8"},
+      {:poison, "~> 4.0.1"}
     ]
   end
 end
