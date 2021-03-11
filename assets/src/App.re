@@ -1,5 +1,5 @@
 open Phx;
-open MessageMap;
+open !MessageMap;
 
 let subtract = (a1, a2) => {
   let l2 = Array.to_list(a2);
@@ -33,13 +33,13 @@ type action =
   | ReceiveAvatarProfile(string, string)
   | Receive(string, string, string)
   | UpdateText(string);
-  // let (state, dispatch) = React.useReducer(
-  //   (state, action) =>
-  //     switch (action) {
-  //     | Tick => {count: state.count + 1}
-  //     },
-  //   {count: 0}
-  // );
+// let (state, dispatch) = React.useReducer(
+//   (state, action) =>
+//     switch (action) {
+//     | Tick => {count: state.count + 1}
+//     },
+//   {count: 0}
+// );
 let reducer = (state, action) =>
   switch (action) {
   | Connected(id, name, socket, channel) =>
@@ -86,6 +86,7 @@ let reducer = (state, action) =>
     | _ => state
     }
   | RoomEnter(room_id) =>
+    Js.log3("RoomEnter: ", room_id, state);
     switch (state) {
     | Ready({id, channel, entered} as state) =>
       push("room:enter", {"source": id, "room_id": room_id}, channel)
@@ -99,14 +100,17 @@ let reducer = (state, action) =>
         });
       state;
     | _ => state
-    }
+    };
   | RoomSelect(room_id) =>
+    Js.log3("RoomSelect: ", room_id, state);
     switch (state) {
     | Ready({selected} as state) =>
+      Js.log2("RoomSelect:selected ", selected);
+      Js.log2("RoomSelect:state ", state);
       let state = Ready({...state, selected: Some(room_id)});
       state;
     | _ => state
-    }
+    };
   | ReceiveRoomSetting(room_id, name, color) =>
     switch (state) {
     | Ready({rooms, available} as state) =>
@@ -122,12 +126,13 @@ let reducer = (state, action) =>
     }
 
   | ReceiveAvatarProfile(avatar_id, name) =>
+    Js.log3("ReceiveAvatarProfile: ", avatar_id, name);
     switch (state) {
     | Ready(state) =>
       let state = Ready({...state, name});
       state;
     | _ => state
-    }
+    };
 
   | UpdateText(input) =>
     Js.log2("UpdateText", input);
@@ -139,7 +144,7 @@ let reducer = (state, action) =>
       state;
     | _ => state
     };
-};
+  };
 
 [@react.component]
 let make = () => {
@@ -190,7 +195,7 @@ let make = () => {
     };
   };
   let connect = () => {
-    Js.log("CONNECTING")
+    Js.log("CONNECTING");
     let socket = initSocket("/socket") |> connectSocket(_);
     let channel = socket |> initChannel("lounge:hello", _);
     let _ =
@@ -257,9 +262,7 @@ let make = () => {
      | Ready({name, rooms, available, entered, messages, text, selected}) =>
        <>
          <div className={Room.roomClassName(selected, rooms)}>
-           <header className="c-header">
-             {React.string("CizenChat")}
-           </header>
+           <header className="c-header"> {React.string("CizenChat")} </header>
            <div className="p-side-content">
              <InPlaceEdit
                name="user"
@@ -302,8 +305,7 @@ let make = () => {
                   </div>
                   <MessageList messages={Message.getMsg(room, messages)} />
                 </>
-              | None =>
-                <p> {React.string("Select or create a room")} </p>
+              | None => <p> {React.string("Select or create a room")} </p>
               }}
            </div>
            <div className="c-text-area-wrapper">

@@ -1,4 +1,4 @@
-open MessageMap;
+open !MessageMap;
 
 type t = {
   body: string,

@@ -61,6 +61,7 @@ function reducer(state, action) {
               };
     case /* RoomEnter */2 :
         var room_id$1 = action._0;
+        console.log("RoomEnter: ", room_id$1, state);
         if (typeof state === "number") {
           return state;
         }
@@ -84,10 +85,14 @@ function reducer(state, action) {
                 }
               };
     case /* RoomSelect */3 :
+        var room_id$2 = action._0;
+        console.log("RoomSelect: ", room_id$2, state);
         if (typeof state === "number") {
           return state;
         }
         var state$3 = state._0;
+        console.log("RoomSelect:selected ", state$3.selected);
+        console.log("RoomSelect:state ", state$3);
         return /* Ready */{
                 _0: {
                   id: state$3.id,
@@ -99,11 +104,11 @@ function reducer(state, action) {
                   entered: state$3.entered,
                   messages: state$3.messages,
                   text: state$3.text,
-                  selected: action._0
+                  selected: room_id$2
                 }
               };
     case /* ReceiveRoomSetting */4 :
-        var room_id$2 = action._0;
+        var room_id$3 = action._0;
         if (typeof state === "number") {
           return state;
         }
@@ -114,8 +119,8 @@ function reducer(state, action) {
                   name: state$4.name,
                   socket: state$4.socket,
                   channel: state$4.channel,
-                  rooms: Room$CizenChat.upsertRoom(room_id$2, action._1, action._2, state$4.rooms),
-                  available: Room$CizenChat.uniqRooms(room_id$2, state$4.available),
+                  rooms: Room$CizenChat.upsertRoom(room_id$3, action._1, action._2, state$4.rooms),
+                  available: Room$CizenChat.uniqRooms(room_id$3, state$4.available),
                   entered: state$4.entered,
                   messages: state$4.messages,
                   text: state$4.text,
@@ -123,6 +128,8 @@ function reducer(state, action) {
                 }
               };
     case /* ReceiveAvatarProfile */5 :
+        var name = action._1;
+        console.log("ReceiveAvatarProfile: ", action._0, name);
         if (typeof state === "number") {
           return state;
         }
@@ -130,7 +137,7 @@ function reducer(state, action) {
         return /* Ready */{
                 _0: {
                   id: state$5.id,
-                  name: action._1,
+                  name: name,
                   socket: state$5.socket,
                   channel: state$5.channel,
                   rooms: state$5.rooms,
