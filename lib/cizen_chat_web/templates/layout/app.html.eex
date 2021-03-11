@@ -11,6 +11,6 @@
 
   <body>
     <div id="app"></div>
-    <script src="<%= static_path(@conn, "/js/index.js") %>"></script>
+    <script src="<%= static_path(@conn, "/js/index.bs.js") %>"></script>
   </body>
 </html>
