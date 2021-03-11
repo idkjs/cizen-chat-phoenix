@@ -14,4 +14,7 @@ yarn
 
 ```
 mix phx.server
+
 ```
+
+then open `http://localhost:4000`
