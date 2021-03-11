@@ -5,10 +5,10 @@ let make = (~messages) => {
     {messages
      |> Array.mapi((i: int, msg: Message.t) =>
           <div className="c-message" key={string_of_int(i)}>
-            <b> {ReasonReact.string(msg.body)} </b>
-            <i> {ReasonReact.string(" by " ++ msg.avatar_id)} </i>
+            <b> {React.string(msg.body)} </b>
+            <i> {React.string(" by " ++ msg.avatar_id)} </i>
           </div>
         )
-     |> ReasonReact.array}
+     |> React.array}
   </div>;
 };

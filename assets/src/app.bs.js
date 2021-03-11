@@ -233,6 +233,7 @@ function App(Props) {
               });
   };
   var connect = function (param) {
+    console.log("CONNECTING");
     var socket = Phx.connectSocket(undefined, Phx.initSocket(undefined, "/socket"));
     var channel = Phx.initChannel("lounge:hello", undefined, socket);
     Phx.putReceive("ok", (function (res) {
@@ -272,9 +273,7 @@ function App(Props) {
   };
   React.useEffect((function () {
           connect(undefined);
-          return (function (param) {
-                    
-                  });
+          
         }), []);
   var handleSend = function (param) {
     if (typeof state === "number") {

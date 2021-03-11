@@ -33,8 +33,14 @@ type action =
   | ReceiveAvatarProfile(string, string)
   | Receive(string, string, string)
   | UpdateText(string);
-
-let reducer = (state, action) => {
+  // let (state, dispatch) = React.useReducer(
+  //   (state, action) =>
+  //     switch (action) {
+  //     | Tick => {count: state.count + 1}
+  //     },
+  //   {count: 0}
+  // );
+let reducer = (state, action) =>
   switch (action) {
   | Connected(id, name, socket, channel) =>
     let state =
@@ -50,7 +56,6 @@ let reducer = (state, action) => {
         text: "",
         selected: None,
       });
-
     state;
 
   | Receive(source, room_id, body) =>
@@ -134,11 +139,17 @@ let reducer = (state, action) => {
       state;
     | _ => state
     };
-  };
 };
 
 [@react.component]
 let make = () => {
+  //   let (state, dispatch) = React.useReducer(
+  //   (state, action) =>
+  //     switch (action) {
+  //     | Tick => {count: state.count + 1}
+  //     },
+  //   {count: 0}
+  // );
   let (state, dispatch) = React.useReducer(reducer, Connecting);
 
   let sendAvatarProfile = name => {
@@ -179,6 +190,7 @@ let make = () => {
     };
   };
   let connect = () => {
+    Js.log("CONNECTING")
     let socket = initSocket("/socket") |> connectSocket(_);
     let channel = socket |> initChannel("lounge:hello", _);
     let _ =
@@ -205,7 +217,7 @@ let make = () => {
 
   React.useEffect0(() => {
     connect() |> ignore;
-    Some(() => ());
+    None;
   });
   let roomCreate = () => {
     switch (state) {

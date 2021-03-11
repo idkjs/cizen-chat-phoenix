@@ -26,12 +26,12 @@ let make = (~name, ~text, ~handleChange) => {
      | Fixed =>
        <>
          <span className={"c-iedit-" ++ name ++ "-content"}>
-           {ReasonReact.string(text)}
+           {React.string(text)}
          </span>
          <span
            className={"c-iedit-" ++ name ++ "-action"}
            onClick={_event => Toggle |> dispatch}>
-           {ReasonReact.string("Edit")}
+           {React.string("Edit")}
          </span>
        </>
      | Editing({text}) =>
